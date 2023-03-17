@@ -1,4 +1,4 @@
-#Estudiante Model
+# Estudiante Model
 Este es un modelo de Mongoose para la colección de estudiantes en una base de datos MongoDB. El modelo define la estructura de un documento de estudiante y sus propiedades.
 
 ## Requisitos
