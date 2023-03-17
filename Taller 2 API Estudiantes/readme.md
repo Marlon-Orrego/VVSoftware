@@ -8,7 +8,8 @@ Antes de ejecutar el servidor, asegúrese de tener instalado Node.js y MongoDB e
 
 ## Instalación
 
-Clonar este repositorio en su sistema: git clone https://github.com/Marlon-Orrego/estudiante-api.git
+Clonar este repositorio en su sistema: git clone https://github.com/Marlon-Orrego/VVSoftware.git
+Acceder a la carpeta "Taller 2 API Estudiantes"
 Instalar las dependencias: npm install
 Configure las variables de entorno DB_USER, DB_PASSWORD y DB_NAME con sus credenciales de MongoDB.
 Inicie el servidor: npm start
@@ -32,5 +33,3 @@ Elimina un estudiante existente según su ID.
 ## Contribuir
 Si desea contribuir a este proyecto, puede enviar un Pull Request a través de GitHub.
 
-##Licencia
-Este proyecto está bajo la licencia MIT.
