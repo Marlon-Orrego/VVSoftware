@@ -1,11 +1,14 @@
 Estudiante API
+
 Este es un servidor Node.js que utiliza Express y Mongoose para crear un API REST para realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) en la colección de estudiantes almacenada en una base de datos MongoDB.
 
 Requisitos
+
 Antes de ejecutar el servidor, asegúrese de tener instalado Node.js y MongoDB en su sistema.
 
 Instalación
-Clonar este repositorio en su sistema: git clone https://github.com/tu-usuario/estudiante-api.git
+
+Clonar este repositorio en su sistema: git clone https://github.com/Marlon-Orrego/estudiante-api.git
 Instalar las dependencias: npm install
 Configure las variables de entorno DB_USER, DB_PASSWORD y DB_NAME con sus credenciales de MongoDB.
 Inicie el servidor: npm start
