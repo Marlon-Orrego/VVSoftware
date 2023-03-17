@@ -29,6 +29,7 @@ Puede utilizar el modelo para realizar operaciones CRUD (Crear, Leer, Actualizar
 ## Propiedades del modelo
 El modelo de estudiante tiene las siguientes propiedades:
 ```javascript
+
 name: El nombre del estudiante (String).
 id: El número de identificación del estudiante (String).
 age: La edad del estudiante (Number).
