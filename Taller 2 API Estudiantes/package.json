@@ -12,12 +12,12 @@
     "mongoose": "^6.10.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node app.js",
     "test": "node ./node_modules/mocha/bin/_mocha tests/test.js --timeout 250"
   },
   "name": "taller-2-api-estudiantes",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
