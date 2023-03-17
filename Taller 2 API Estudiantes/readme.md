@@ -15,7 +15,7 @@ Configure las variables de entorno DB_USER, DB_PASSWORD y DB_NAME con sus creden
 Inicie el servidor: npm start
 
 ## Endpoints
-###GET /estudiantes
+### GET /estudiantes
 Devuelve una lista de todos los estudiantes en la base de datos.
 
 ### GET /estudiantes/:id
