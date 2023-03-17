@@ -2,8 +2,8 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const sinon = require("sinon");
 const expect = chai.expect;
-const app = require("./app");
-const Estudiante = require("./models/Estudiante");
+const app = require("../Taller 2 API Estudiantes/app");
+const Estudiante = require("../Taller 2 API Estudiantes/models/Estudiante");
 
 chai.use(chaiHttp);
 
