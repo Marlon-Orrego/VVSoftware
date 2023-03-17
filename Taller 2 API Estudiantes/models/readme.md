@@ -9,7 +9,7 @@ Para utilizar este modelo en su aplicación Node.js, siga estos pasos:
 
 Importe Mongoose en su archivo: const mongoose = require('mongoose');
 Defina el modelo de estudiante utilizando el siguiente código:
-//
+```
 const Estudiante = mongoose.model('Estudiante', {
   name: String,
   id: String,
@@ -18,20 +18,25 @@ const Estudiante = mongoose.model('Estudiante', {
 });
 
 module.exports = Estudiante;
+```
 
 Guarde este código en un archivo llamado estudiante.js o en otro archivo que desee.
 En su aplicación, importe el modelo de estudiante utilizando la siguiente línea de código:
-//
+```
+
 const Estudiante = require('./models/estudiante');
+```
 
 Puede utilizar el modelo para realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) en la colección de estudiantes en su base de datos.
 ## Propiedades del modelo
 El modelo de estudiante tiene las siguientes propiedades:
-//
+```
+
 name: El nombre del estudiante (String).
 id: El número de identificación del estudiante (String).
 age: La edad del estudiante (Number).
 career: La carrera que estudia el estudiante (String).
+```
 
 ## Contribuir
 Si desea contribuir a este proyecto, puede enviar un Pull Request a través de GitHub.
