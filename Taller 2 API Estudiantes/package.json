@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "node ./node_modules/mocha/bin/_mocha --timeout 20000"
+    "test": "node ./node_modules/mocha/bin/_mocha --timeout 200"
   },
   "name": "taller-2-api-estudiantes",
   "version": "1.0.0",
