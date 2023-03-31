@@ -1,116 +1,140 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const sinon = require("sinon");
-const expect = chai.expect;
+const request = require("supertest");
 const app = require("../app");
 const Estudiante = require("../models/Estudiante");
 
-chai.use(chaiHttp);
-
-describe("GET /estudiantes", () => {
-  it("Obtenemos todos los estudiantes", (done) => {
-    const stub = sinon.stub(Estudiante, "find").resolves([]);
-    chai
-      .request(app)
-      .get("/estudiantes")
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an("array");
-        stub.restore();
-        done();
-      });
+jest.mock("../models/Estudiante", () => {
+  const mongoose = require("mongoose");
+  const EstudianteSchema = new mongoose.Schema({
+    nombre: String,
+    edad: Number,
   });
+
+  return {
+    find: jest.fn(),
+    findById: jest.fn(),
+    create: jest.fn(),
+    findByIdAndUpdate: jest.fn(),
+    findByIdAndDelete: jest.fn(),
+    model: jest.fn(() => ({
+      Estudiante: mongoose.model("Estudiante", EstudianteSchema),
+    })),
+  };
 });
 
-describe("GET /estudiantes/:id", () => {
-  it("Obtenemos un estudiante por su ID", async () => {
-    const estudiante = new Estudiante({
-      name: "Valeria",
-      id: "1001841471",
-      age: 21,
-      career: "Ingenieria de Sistemas",
+describe("Endpoints de estudiantes", () => {
+  const estudiantePrueba = {
+    _id: "60d88834e7924f3cd4eb9b13",
+    nombre: "Juan",
+    edad: 20,
+  };
+
+  describe("GET /estudiantes", () => {
+    it("Debería devolver todos los estudiantes", async () => {
+      Estudiante.find.mockReturnValue([estudiantePrueba]);
+      const response = await request(app).get("/estudiantes");
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([estudiantePrueba]);
     });
-    const stub = sinon.stub(Estudiante, "findById").resolves(estudiante);
-    const res = await chai.request(app).get("/estudiantes/" + estudiante.id);
-    expect(res).to.have.status(200);
-    expect(res.body).to.be.an("object");
-    expect(res.body.name).to.equal("Valeria");
-    stub.restore();
+
+    it("Debería manejar errores correctamente", async () => {
+      Estudiante.find.mockRejectedValue(new Error("Error en la base de datos"));
+      const response = await request(app).get("/estudiantes");
+      expect(response.status).toBe(500);
+      expect(response.text).toBe("Error en el servidor");
+    });
   });
-});
 
-chai.use(chaiHttp);
-
-describe("POST /estudiantes", () => {
-  it("Crea un nuevo estudiante", (done) => {
-    const stub = sinon.stub(Estudiante.prototype, "save").resolves({
-      id: "112233",
-      name: "Julian",
-      age: 22,
-      career: "Ingenieria Civil",
+  describe("GET /estudiantes/:id", () => {
+    it("Debería devolver un estudiante por su ID", async () => {
+      Estudiante.findById.mockReturnValue(estudiantePrueba);
+      const response = await request(app).get(
+        `/estudiantes/${estudiantePrueba._id}`
+      );
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(estudiantePrueba);
     });
-    chai
-      .request(app)
-      .post("/estudiantes")
-      .send({
-        id: "112233",
-        name: "Julian",
-        age: 22,
-        career: "Ingenieria Civil",
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an("object");
-        expect(res.body.name).to.equal("Julian");
-        stub.restore();
-        done();
-      });
+
+    it("Debería manejar errores correctamente", async () => {
+      Estudiante.findById.mockRejectedValue(
+        new Error("Error en la base de datos")
+      );
+      const response = await request(app).get(
+        `/estudiantes/${estudiantePrueba._id}`
+      );
+      expect(response.status).toBe(500);
+      expect(response.text).toBe("Error en el servidor");
+    });
   });
-});
 
-describe("PUT /estudiantes/:id", () => {
-  it("Actualiza un estudiante existente", async () => {
-    const estudiante = new Estudiante({
-      id: "12312312312",
-      name: "Laura",
-      age: 18,
-      career: "Ingenieria Ambiental",
+  describe("POST /estudiantes", () => {
+    it("Debería crear un nuevo estudiante", async () => {
+      const estudianteNuevo = {
+        nombre: "Pedro",
+        edad: 22,
+      };
+      Estudiante.create.mockReturnValue(estudianteNuevo);
+      const response = await request(app)
+        .post("/estudiantes")
+        .send(estudianteNuevo);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(estudianteNuevo);
     });
-    const stub = sinon.stub(Estudiante, "findByIdAndUpdate").resolves({
-      id: estudiante.id,
-      name: "Laura",
-      age: estudiante.age,
-      career: estudiante.career,
+
+    it("Debería manejar errores correctamente", async () => {
+      Estudiante.create.mockRejectedValue(
+        new Error("Error en la base de datos")
+      );
+      const response = await request(app).post("/estudiantes").send({});
+      expect(response.status).toBe(500);
+      expect(response.text).toBe("Error en el servidor");
     });
-    const res = await chai
-      .request(app)
-      .put("/estudiantes/" + estudiante.id)
-      .send({ name: "Laura" });
-    expect(res).to.have.status(200);
-    expect(res.body).to.be.an("object");
-    expect(res.body.name).to.equal("Laura");
-    stub.restore();
   });
-});
-//Prueba para el endpoint DELETE /estudiantes/:id:
-describe("DELETE /estudiantes/:id", () => {
-  it("Elimina un estudiante existente", async () => {
-    const estudiante = new Estudiante({
-      id: "1001841471",
-      name: "Valeria Mondragón Roldan",
-      age: 21,
-      career: "Ingenieria de Sistemas",
+
+  describe("PUT /estudiantes/:id", () => {
+    it("Debería actualizar un estudiante existente", async () => {
+      const estudianteActualizado = {
+        nombre: "Pedro",
+        edad: 23,
+      };
+      Estudiante.findByIdAndUpdate.mockReturnValue(estudianteActualizado);
+      const response = await request(app)
+        .put(`/estudiantes/${estudiantePrueba._id}`)
+        .send(estudianteActualizado);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(estudianteActualizado);
     });
-    const saveStub = sinon.stub(estudiante, "save").resolves(estudiante);
-    const deleteStub = sinon
-      .stub(Estudiante, "findByIdAndDelete")
-      .resolves(estudiante);
 
-    const res = await chai.request(app).delete("/estudiantes/" + estudiante.id);
+    it("Debería manejar errores correctamente", async () => {
+      Estudiante.findByIdAndUpdate.mockRejectedValue(
+        new Error("Error en la base de datos")
+      );
+      const response = await request(app)
+        .put(`/estudiantes/${estudiantePrueba._id}`)
+        .send({});
+      expect(response.status).toBe(500);
+      expect(response.text).toBe("Error en el servidor");
+    });
+  });
 
-    expect(res).to.have.status(200);
-    expect(deleteStub.calledOnce).to.be.true;
-    saveStub.restore();
-    deleteStub.restore();
+  describe("DELETE /estudiantes/:id", () => {
+    it("Debería eliminar un estudiante existente", async () => {
+      Estudiante.findByIdAndDelete.mockReturnValue(estudiantePrueba);
+      const response = await request(app).delete(
+        `/estudiantes/${estudiantePrueba._id}`
+      );
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(estudiantePrueba);
+    });
+
+    it("Debería manejar errores correctamente", async () => {
+      Estudiante.findByIdAndDelete.mockRejectedValue(
+        new Error("Error en la base de datos")
+      );
+      const response = await request(app).delete(
+        `/estudiantes/${estudiantePrueba._id}`
+      );
+      expect(response.status).toBe(500);
+      expect(response.text).toBe("Error en el servidor");
+    });
   });
 });

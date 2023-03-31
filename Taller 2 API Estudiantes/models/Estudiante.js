@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const Estudiante = mongoose.model("Estudiante", {
-  name: String,
-  id: String,
-  age: Number,
-  career: String,
+const estudianteSchema = new mongoose.Schema({
+  nombre: String,
+  edad: Number,
 });
+
+const Estudiante = mongoose.model("Estudiante", estudianteSchema);
 
 module.exports = Estudiante;

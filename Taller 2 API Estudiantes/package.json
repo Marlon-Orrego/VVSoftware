@@ -1,6 +1,9 @@
 {
   "devDependencies": {
     "chai": "^4.3.7",
+    "istanbul": "^0.4.5",
+    "jest": "^29.5.0",
+    "jest-cli": "^29.5.0",
     "mocha": "^10.2.0",
     "sinon": "^15.0.2",
     "supertest": "^6.3.3"
@@ -13,7 +16,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "node ./node_modules/mocha/bin/_mocha tests/test.js --timeout 250"
+    "test": "jest --coverage --testPathPattern=tests",
+    "coverage": "istanbul cover node_modules/jest/bin/jest.js --coverage"
   },
   "name": "taller-2-api-estudiantes",
   "version": "1.0.0",
