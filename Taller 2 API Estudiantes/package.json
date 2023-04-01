@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "jest --coverage --testPathPattern=tests",
+    "test": "jest --coverage",
     "coverage": "istanbul cover node_modules/jest/bin/jest.js --coverage"
   },
   "name": "taller-2-api-estudiantes",
@@ -27,3 +27,4 @@
   "license": "ISC",
   "description": ""
 }
+
