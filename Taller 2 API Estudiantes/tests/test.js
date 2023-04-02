@@ -7,6 +7,7 @@ jest.mock("../models/Estudiante", () => {
   const EstudianteSchema = new mongoose.Schema({
     nombre: String,
     edad: Number,
+    cedula: String,
   });
 
   return {
@@ -26,7 +27,9 @@ describe("Endpoints de estudiantes", () => {
     _id: "60d88834e7924f3cd4eb9b13",
     nombre: "Juan",
     edad: 20,
+    cedula: "1000417521",
   };
+  const estudiantePrueba2 = {};
 
   describe("GET /estudiantes", () => {
     it("Debería devolver todos los estudiantes", async () => {
@@ -34,6 +37,15 @@ describe("Endpoints de estudiantes", () => {
       const response = await request(app).get("/estudiantes");
       expect(response.status).toBe(200);
       expect(response.body).toEqual([estudiantePrueba]);
+    });
+
+    describe("GET /estudiantes", () => {
+      it("Debería devolver un arreglo vacío si no hay estudiantes", async () => {
+        Estudiante.find.mockReturnValue([estudiantePrueba2]);
+        const response = await request(app).get("/estudiantes");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual([estudiantePrueba2]);
+      });
     });
 
     it("Debería manejar errores correctamente", async () => {
@@ -71,6 +83,7 @@ describe("Endpoints de estudiantes", () => {
       const estudianteNuevo = {
         nombre: "Pedro",
         edad: 22,
+        cedula: "1000417520",
       };
       Estudiante.create.mockReturnValue(estudianteNuevo);
       const response = await request(app)
@@ -89,12 +102,12 @@ describe("Endpoints de estudiantes", () => {
       expect(response.text).toBe("Error en el servidor");
     });
   });
-
   describe("PUT /estudiantes/:id", () => {
     it("Debería actualizar un estudiante existente", async () => {
       const estudianteActualizado = {
         nombre: "Pedro",
         edad: 23,
+        cedula: "1000417520",
       };
       Estudiante.findByIdAndUpdate.mockReturnValue(estudianteActualizado);
       const response = await request(app)
