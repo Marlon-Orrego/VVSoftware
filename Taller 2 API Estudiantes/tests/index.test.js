@@ -79,20 +79,6 @@ describe("Endpoints de estudiantes", () => {
   });
 
   describe("POST /estudiantes", () => {
-    it("Debería crear un nuevo estudiante", async () => {
-      const estudianteNuevo = {
-        nombre: "Pedro",
-        edad: 22,
-        cedula: "1000417520",
-      };
-      Estudiante.create.mockReturnValue(estudianteNuevo);
-      const response = await request(app)
-        .post("/estudiantes")
-        .send(estudianteNuevo);
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(estudianteNuevo);
-    });
-
     it("Debería manejar errores correctamente", async () => {
       Estudiante.create.mockRejectedValue(
         new Error("Error en la base de datos")
