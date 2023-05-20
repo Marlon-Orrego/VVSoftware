@@ -1,4 +1,35 @@
-# Verifiación y Validación de Software
-## Aquí encontrarás todos los proyectos relacionados al equipo de trabajo conformado por:
+# Estudiante API
 
-Valeria Mondragón Roldán , Jackeline Gomez Londoño, Marlon Steven Orrego Restrepo
+Este es un servidor Node.js que utiliza Express y Mongoose para crear un API REST para realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) en la colección de estudiantes almacenada en una base de datos MongoDB.
+
+## Requisitos
+
+Antes de ejecutar el servidor, asegúrese de tener instalado Node.js y MongoDB en su sistema.
+
+## Instalación
+
+Clonar este repositorio en su sistema: git clone https://github.com/Marlon-Orrego/VVSoftware.git
+Acceder a la carpeta "Taller 2 API Estudiantes"
+Instalar las dependencias: npm install
+Configure las variables de entorno DB_USER, DB_PASSWORD y DB_NAME con sus credenciales de MongoDB.
+Inicie el servidor: npm start
+
+## Endpoints
+### GET /estudiantes
+Devuelve una lista de todos los estudiantes en la base de datos.
+
+### GET /estudiantes/:id
+Devuelve un estudiante específico según su ID.
+
+### POST /estudiantes
+Crea un nuevo estudiante en la base de datos.
+
+### PUT /estudiantes/:id
+Actualiza un estudiante existente según su ID.
+
+### DELETE /estudiantes/:id
+Elimina un estudiante existente según su ID.
+
+## Contribuir
+Si desea contribuir a este proyecto, puede enviar un Pull Request a través de GitHub.
+
