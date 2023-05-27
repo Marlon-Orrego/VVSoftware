@@ -7,5 +7,4 @@ app.use(bodyParser.json()); // Middleware para procesar el cuerpo de las solicit
 app.use(cors()); // Middleware para permitir el acceso a la API desde cualquier origen
 app.use(router.router);
 const puerto = 3001;
-app.listen(puerto);
 module.exports = app;
