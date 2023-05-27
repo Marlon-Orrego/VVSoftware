@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../app");
 const Estudiante = require("../models/Estudiante");
 
-jest.mock("../models/Estudiante", () => {
+jest.mock("../src/models/Estudiante", () => {
   const mongoose = require("mongoose");
   const EstudianteSchema = new mongoose.Schema({
     nombre: String,
