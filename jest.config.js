@@ -2,7 +2,7 @@ module.exports = {
     // ...otras configuraciones...
     collectCoverage: true,
     collectCoverageFrom: [
-      'app.js',
+      'src/routers/* .js',
     ],
     coverageReporters: ['text', 'lcov'],
   };
